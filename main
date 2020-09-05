@@ -1,0 +1,9 @@
+import os, textract
+
+dossier = os.path.dirname(__file__)
+
+for file in os.listdir(dossier):
+    if file.endswith(".pdf"):
+        text = str(textract.process(os.path.join(dossier, file)))
+        with open(os.path.abspath(os.path.join(dossier, f"{file}.txt")), "w") as f:
+            f.write(text)

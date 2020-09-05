@@ -1,0 +1,27 @@
+'''
+PYTHON 3.7.9
+PIP3.7
+TEXTRACT 1.6.3
+>> pip install textract
+
+transcoding not exhaustive
+'''
+
+import os, textract
+
+dossier = os.path.dirname(__file__)
+
+for file in os.listdir(dossier):
+    if file.endswith(".pdf"):
+        text = str(textract.process(os.path.join(dossier, file), encoding='ISO-8859-15'))
+        text = text.replace(str(r"\n"), "\n")
+        text = text.replace(str(r"\xf4"), "o")
+        text = text.replace(str(r"\xe9"), "e")
+        text = text.replace(str(r"\xe8"), "e")
+        text = text.replace(str(r"\xea"), "e")
+        text = text.replace(str(r"\xe0"), "a")
+        text = text.replace(str(r"\x0c"), "")
+        text = text.replace(str(r"\xb0"), "°")
+        
+        with open(os.path.abspath(os.path.join(dossier, f"{file}.txt")), "w") as f:
+            f.write(text)

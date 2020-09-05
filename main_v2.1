@@ -1,0 +1,18 @@
+'''
+PYTHON 3.7.9
+PIP3.7
+TEXTRACT 1.6.3
+>> pip install textract
+'''
+
+import os, textract
+
+dossier = os.path.dirname(__file__)
+
+for file in os.listdir(dossier):
+    if file.endswith(".pdf"):
+        text = textract.process(os.path.join(dossier, file), encoding='ISO-8859-15')
+        text = text.decode('cp1252')
+        
+        with open(os.path.abspath(os.path.join(dossier, f"{file}.txt")), "w", encoding='utf-8') as f:
+            f.write(text)
